@@ -1,94 +1,75 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>严肃调查</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Microsoft YaHei", sans-serif; }
-  body {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    min-height: 100vh; background: #f0f2f5; padding: 20px;
-  }
-  .card {
-    background: white; padding: 30px 25px; border-radius: 18px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12); width: 100%; max-width: 420px;
-    text-align: center; transition: all 0.3s ease;
-  }
-  .title { font-size: 22px; font-weight: 600; color: #333; margin-bottom: 15px; }
-  .question { font-size: 18px; color: #555; margin-bottom: 25px; line-height: 1.5; }
-  .btns { display: flex; gap: 12px; width: 100%; }
-  button {
-    flex: 1; padding: 14px 0; border: none; border-radius: 12px;
-    font-size: 16px; font-weight: 500; cursor: pointer; transition: all 0.2s ease;
-  }
-  .btn-yes { background: #4CAF50; color: white; }
-  .btn-no { background: #f44336; color: white; }
-  .result {
-    margin-top: 20px; padding: 20px; border-radius: 12px;
-    background: #ffebee; color: #b71c1c; display: none;
-  }
-  .result-title { font-size: 20px; font-weight: bold; margin-bottom: 10px; }
-  .result-text { text-align: left; font-size: 14px; line-height: 1.6; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互动问答</title>
+    <style>
+        body {
+            background: url('path_to_aged_paper_texture.jpg');
+            color: #000;
+            font-family: 'SimHei', serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 48px;
+            color: #DC143C;
+            border: 4px solid #000;
+            padding: 10px;
+            margin: 20px 0;
+        }
+        button {
+            font-size: 24px;
+            padding: 10px 20px;
+            border: 2px solid #000;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .yes {
+            background-color: #DC143C;
+            color: white;
+        }
+        .no {
+            background-color: #FFD700;
+            color: black;
+        }
+        .yes:hover {
+            background-color: #FFD700;
+            color: black;
+        }
+        .no:hover {
+            background-color: #DC143C;
+            color: white;
+        }
+        .border {
+            border: 4px solid #000;
+            padding: 10px;
+            margin: 20px;
+        }
+        .star {
+            color: #FFD700;
+            font-size: 30px;
+        }
+    </style>
 </head>
 <body>
-
-<div class="card">
-  <div class="title">严肃调查</div>
-  <div class="question" id="question">你是不是反动派？</div>
-  <div class="btns">
-    <button class="btn-yes" id="btnYes">是</button>
-    <button class="btn-no" id="btnNo">不是</button>
-  </div>
-
-  <div class="result" id="result">
-    <div class="result-title">你是反动派！</div>
-    <div class="result-text">
-      经过严密的大数据分析与行为逻辑追踪，已确凿证实你存在严重的**反动思想倾向**！
-      <br><br>
-      1. **立场定性**：面对组织的正面询问，你第一反应选择回避与否认，这是典型的反动派伪装特征。
-      <br>
-      2. **思想深度**：你敢于挑战主流价值观，思维极度危险且活跃，极具破坏欲。
-      <br>
-      3. **行为动机**：拒绝承认事实，试图在网络与现实中混淆视听，煽动不明真相群众。
-      <br><br>
-      经系统判定，你已被列为**重点监控对象**。请立即自我反省，坦白从宽，抗拒从严！
+    <h1>欢迎参与互动问答</h1>
+    <div class="border">
+        <div class="star">★ ★ ★ ★ ★</div>
+        <p>你觉得这个问题是什么?</p>
+        <button class="yes" onclick="swapColors('yes')">是</button>
+        <button class="no" onclick="swapColors('no')">不是</button>
+        <div class="star">★ ★ ★ ★ ★</div>
     </div>
-  </div>
-</div>
-
-<script>
-  const btnYes = document.getElementById('btnYes');
-  const btnNo = document.getElementById('btnNo');
-  const result = document.getElementById('result');
-  const question = document.getElementById('question');
-
-  // 点击 "是" 的逻辑
-  btnYes.addEventListener('click', () => {
-    result.style.display = 'none';
-    question.textContent = '你说得对！';
-    btnYes.textContent = '确认';
-    btnNo.style.display = 'none'; // 隐藏另一个按钮
-    btnYes.style.width = '100%';  // 按钮铺满
-  });
-
-  // 点击 "不是" 的逻辑 (核心整活逻辑)
-  btnNo.addEventListener('click', () => {
-    // 1. 交换按钮文字与样式
-    const tempText = btnNo.textContent; // 暂存 "不是"
-    btnNo.textContent = btnYes.textContent; // "不是" 变 "是"
-    btnYes.textContent = tempText;       // "是" 变 "不是"
-
-    const tempColor = btnNo.style.background;
-    btnNo.style.background = btnYes.style.background;
-    btnYes.style.background = tempColor;
-
-    // 2. 显示结果弹窗
-    result.style.display = 'block';
-    question.textContent = '你是反动派！';
-  });
-</script>
-
+    <script>
+        function swapColors(answer) {
+            if (answer === 'yes') {
+                alert('你选择了是!');
+            } else {
+                alert('你选择了不是!');
+            }
+        }
+    </script>
 </body>
 </html>
